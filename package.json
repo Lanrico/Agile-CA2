@@ -4,19 +4,47 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js",
-    "dev": "nodemon --exec npm start"
+    "build": "npm-run-all clean compile:all",
+    "clean": "rimraf ./build && mkdir build",
+     "compile:tmdb": "babel ./api/ --out-dir build/api",
+    "compile:moviemodels": "babel ./api/movies --out-dir build/api/movies",
+    "compile:usermodels": "babel ./api/users --out-dir build/api/users",
+    "compile:genremodels": "babel ./api/genres --out-dir build/api/genres",
+    "compile:models": "npm-run-all compile:moviemodels compile:usermodels compile:genremodels",
+    "compile:authenticate": "babel ./authenticate --out-dir build/authenticate",
+    "compile:seed": "babel ./seedData --out-dir build/seedData",
+    "compile:app": "babel index.js --out-dir build/",
+    "compile:db": "babel ./db --out-dir build/db",
+    "copy:nodeModules": "ncp ./node_modules/ build/node_modules",
+    "copy:public": "ncp ./public build/public",
+    "copy:all": "npm-run-all copy:nodeModules copy:public",
+    "compile:all": "npm-run-all compile:tmdb compile:models compile:seed compile:authenticate compile:app compile:db copy:all",
+    "postinstall": "rimraf ./build && npm run compile:all",
+    "start": "nodemon --exec babel-node index.js",
+    "start:prod": "cross-env SEED_DB=true NODE_ENV=test node build/index.js",
+    "test": "cross-env NODE_ENV=test SEED_DB=false mocha"
   },
   "author": "Guanlan Ji",
   "license": "ISC",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/node": "^7.6.3",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.0.0",
     "babel-eslint": "^10.1.0",
-    "babel-preset-env": "^1.7.0",
-    "eslint": "^8.27.0",
-    "nodemon": "^2.0.20"
+    "chai": "^4.0.2",
+    "cross-env": "^6.0.3",
+    "mocha": "^8.1.3",
+    "supertest": "^4.0.2",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.0",
+    "ncp": "2.0.0",
+    "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "@babel/runtime": "^7.6.3",
     "bcrypt-nodejs": "^0.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -26,6 +54,7 @@
     "node-fetch": "^2.6.7",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
-    "uniqid": "^5.4.0"
+    "uniqid": "^5.4.0",
+    "express-async-handler": "^1.2.0"
   }
 }
