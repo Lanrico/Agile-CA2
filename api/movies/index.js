@@ -3,9 +3,10 @@ import { movies, movieReviews, movieDetails } from './moviesData';
 import uniqid from 'uniqid'
 import movieModel from './movieModel';
 import asyncHandler from 'express-async-handler';
-import { getUpcomingMovies } from '../tmdb-api';
+import { getUpcomingMovies, getMovies, getMovie, getMovieImages, getMovieReviews } from '../tmdb-api';
 
 const router = express.Router();
+const movieIdReg = /^[0-9]+.?[0-9]*$/;
 
 router.get('/', asyncHandler(async (req, res) => {
     const movies = await movieModel.find();
@@ -16,6 +17,9 @@ router.get('/', asyncHandler(async (req, res) => {
 router.get('/:id', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     const movie = await movieModel.findByMovieDBId(id);
+    if (!movieIdReg.test(id)) {
+        res.status(403).json({ message: 'Invalid movie id.', status_code: 403 });
+    }
     if (movie) {
         res.status(200).json(movie);
     } else {
@@ -55,9 +59,10 @@ router.post('/:id/reviews', (req, res) => {
     }
 });
 
-router.get('/tmdb/upcoming', asyncHandler(async (req, res) => {
-    const upcomingMovies = await getUpcomingMovies();
-    res.status(200).json(upcomingMovies);
+router.get('/tmdb/discover/page:page', asyncHandler(async (req, res) => {
+    const page = parseInt(req.params.page);
+    const movies = await getMovies(page);
+    res.status(200).json(movies);
 }));
 
 export default router;

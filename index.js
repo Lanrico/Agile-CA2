@@ -1,10 +1,13 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import moviesRouter from './api/movies';
+import moviesAuthenticateRouter from './api/movies/tmdb';
 import genresRouter from './api/genres';
 import './db';
 import './seedData'
 import usersRouter from './api/users';
+import peopleRouter from './api/people';
+import trendingRouter from './api/trending';
 import session from 'express-session';
 import passport from './authenticate';
 
@@ -23,9 +26,12 @@ const app = express();
 const port = process.env.PORT;
 app.use(express.json());
 app.use(passport.initialize());
-app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
+app.use('/api/movies', moviesRouter);
+app.use('/api/movies/tmdb', passport.authenticate('jwt', {session: false}), moviesAuthenticateRouter);
 app.use('/api/genres', genresRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/people', passport.authenticate('jwt', {session: false}), peopleRouter);
+app.use('/api/trending', trendingRouter);
 app.use(errHandler);
 let server = app.listen(port, () => {
   console.info(`Server running at ${port}`);
