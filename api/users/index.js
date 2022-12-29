@@ -3,7 +3,7 @@ import User from './userModel';
 import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import movieModel from '../movies/movieModel';
-import movies from '../../seedData/movies'
+import { getMovie, getTrendingList } from '../tmdb-api';
 
 const router = express.Router(); // eslint-disable-line
 const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
@@ -94,7 +94,8 @@ router.post('/:userName/favourites/remove', asyncHandler(async (req, res) => {
         res.status(403).json({ code: 403, msg: 'Invalid movie id or user name' });
     }
     if (user.favourites.includes(oldFavourite)) {
-        await user.favourites.pop(oldFavourite);
+        const index = user.favourites.indexOf(oldFavourite);
+        user.favourites.splice(index, 1);
         await user.save();
         res.status(201).json(user);
     }
@@ -106,15 +107,18 @@ router.post('/:userName/favourites/remove', asyncHandler(async (req, res) => {
 router.get('/:userName/recommendation', asyncHandler(async (req, res) => {
     const userName = req.params.userName;
     const user = await User.findByUserName(userName).populate('favourites');
+    // console.log(user.favourites)
     var favouriteMovieGenre = {};
     if(user.favourites.length == 0) {
-        res.status(404).json({ code: 404, msg: 'You do not have any favourite movie.' });
+        res.status(201).json([]);
     }
+    else{}
     //Count the number of occurrences of each genre
     for (let index = 0; index < user.favourites.length; index++) {
         const element = user.favourites[index];
-        var j = await movieModel.findByMovieDBId(element)
-        j.genre_ids.map((g) => {
+        var movieDetail = await getMovie(element);
+        movieDetail.genres.map((g) => {
+            g = g.id
             if (favouriteMovieGenre[g]) {
                 favouriteMovieGenre[g] += 1
             }
@@ -129,9 +133,9 @@ router.get('/:userName/recommendation', asyncHandler(async (req, res) => {
     var max = Math.max.apply(null, keys.map(function(x) { return favouriteMovieGenre[x]} ));
     var mostGenre  = keys.filter(function(y) { return favouriteMovieGenre[y] === max });
 
-    //Find the movies contains the genres
-    var results = movies.filter((m) => m.genre_ids.indexOf(parseInt(mostGenre)) > -1)
-    console.log(results.length)
+    //Find the trending movies contains the genres
+    var movies = await getTrendingList("movie","day");
+    var results = movies.results.filter((m) => m.genre_ids.indexOf(parseInt(mostGenre)) > -1)
     res.status(200).json(results);
 }));
 export default router;

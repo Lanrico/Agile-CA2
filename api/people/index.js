@@ -27,7 +27,6 @@ router.get('/:id', asyncHandler(async (req, res) => {
 
 router.get('/tmdb/popular/page:page', asyncHandler(async (req, res) => {
     const page = parseInt(req.params.page);
-    console.log(page)
     const people = await getPeople(page);
     res.status(200).json(people);
 }));
