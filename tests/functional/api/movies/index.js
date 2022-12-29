@@ -7,6 +7,7 @@ import movies from "../../../../seedData/movies";
 
 const expect = chai.expect;
 let db;
+let page;
 
 describe("Movies endpoint", () => {
   before(() => {
@@ -78,4 +79,27 @@ describe("Movies endpoint", () => {
       });
     });
   });
+//
+//
+//
+//
+  describe("GET /api/tmdb/movies/discover/page:page", () => {
+    describe("when the page is valid number", () => {
+      before(() => {
+        page = 1
+      })
+      it("should return the corresponding discover movie list", () => {
+        // return request(api)
+        //   .get(`/api/tmdb/movies/discover/page${page}`)
+        //   .set("Accept", "application/json")
+        //   .expect("Content-Type", /json/)
+        //   .expect(200)
+        //   .then((res) => {
+        //     expect(res.body).to.have.property("page", page);
+        //   });
+      });
+    });
+  });
+
+
 });

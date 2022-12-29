@@ -7,6 +7,7 @@ import { getUpcomingMovies, getMovies, getMovie, getMovieImages, getMovieReviews
 
 const router = express.Router();
 const movieIdReg = /^[0-9]+.?[0-9]*$/;
+const pageReg = /^[1-9]+.?[1-9]*$/;
 
 router.get('/', asyncHandler(async (req, res) => {
     const movies = await movieModel.find();
@@ -15,15 +16,18 @@ router.get('/', asyncHandler(async (req, res) => {
 
 // Get movie details
 router.get('/:id', asyncHandler(async (req, res) => {
-    const id = parseInt(req.params.id);
-    const movie = await movieModel.findByMovieDBId(id);
-    if (!movieIdReg.test(id)) {
+    if (!movieIdReg.test(req.params.id)) {
         res.status(403).json({ message: 'Invalid movie id.', status_code: 403 });
     }
-    if (movie) {
-        res.status(200).json(movie);
-    } else {
-        res.status(404).json({ message: 'The resource you requested could not be found.', status_code: 404 });
+    else {
+        const id = parseInt(req.params.id);
+        const movie = await movieModel.findByMovieDBId(id);
+
+        if (movie) {
+            res.status(200).json(movie);
+        } else {
+            res.status(404).json({ message: 'The resource you requested could not be found.', status_code: 404 });
+        }
     }
 }));
 
@@ -31,7 +35,10 @@ router.get('/:id', asyncHandler(async (req, res) => {
 router.get('/:id/reviews', (req, res) => {
     const id = parseInt(req.params.id);
     // find reviews in list
-    if (movieReviews.id == id) {
+    if (!movieIdReg.test(id)) {
+        res.status(403).json({ message: 'Invalid movie id.', status_code: 403 });
+    }
+    else if (movieReviews.id == id) {
         res.status(200).json(movieReviews);
     } else {
         res.status(404).json({
@@ -45,7 +52,10 @@ router.get('/:id/reviews', (req, res) => {
 router.post('/:id/reviews', (req, res) => {
     const id = parseInt(req.params.id);
 
-    if (movieReviews.id == id) {
+    if (!movieIdReg.test(id)) {
+        res.status(403).json({ message: 'Invalid movie id.', status_code: 403 });
+    }
+    else if (movieReviews.id == id) {
         req.body.created_at = new Date();
         req.body.updated_at = new Date();
         req.body.id = uniqid();
@@ -59,34 +69,14 @@ router.post('/:id/reviews', (req, res) => {
     }
 });
 
-// router.get('/tmdb/upcoming/page:page', asyncHandler(async (req, res) => {
-//     const page = parseInt(req.params.page);
-//     const upcomingMovies = await getUpcomingMovies(page);
-//     res.status(200).json(upcomingMovies);
-// }));
-
 router.get('/tmdb/discover/page:page', asyncHandler(async (req, res) => {
-    const page = parseInt(req.params.page);
-    const movies = await getMovies(page);
-    res.status(200).json(movies);
+    if (pageReg.test(req.params.page)) {
+        const page = parseInt(req.params.page);
+        const movies = await getMovies(page);
+        res.status(200).json(movies);
+    }
+    else {
+        res.status(404).json({ message: 'Invalid page form.', status_code: 404 })
+    }
 }));
-
-// router.get('/tmdb/movie/:id', asyncHandler(async (req, res) => {
-//     const id = parseInt(req.params.id);
-//     const movie = await getMovie(id);
-//     res.status(200).json(movie);
-// }));
-
-// router.get('/tmdb/movie/:id/images', asyncHandler(async (req, res) => {
-//     const id = parseInt(req.params.id);
-//     const movieImages = await getMovieImages(id);
-//     res.status(200).json(movieImages);
-// }));
-
-// router.get('/tmdb/movie/:id/reviews', asyncHandler(async (req, res) => {
-//     const id = parseInt(req.params.id);
-//     const movieReviews = await getMovieReviews(id);
-//     res.status(200).json(movieReviews);
-// }));
-
 export default router;

@@ -5,6 +5,7 @@ import peopleModel from './peopleModel';
 
 const router = express.Router();
 const personIdReg = /^[0-9]+.?[0-9]*$/;
+const pageReg = /^[1-9]+.?[1-9]*$/;
 
 router.get('/', asyncHandler(async (req, res) => {
     const people = await peopleModel.find();
@@ -13,46 +14,74 @@ router.get('/', asyncHandler(async (req, res) => {
 
 // Get person details
 router.get('/:id', asyncHandler(async (req, res) => {
-    const id = parseInt(req.params.id);
-    const person = await peopleModel.findByPeopleDBId(id);
-    if (!personIdReg.test(id)) {
+    if (!personIdReg.test(req.params.id)) {
         res.status(403).json({ message: 'Invalid person id.', status_code: 403 });
     }
-    if (person) {
-        res.status(200).json(person);
-    } else {
-        res.status(404).json({ message: 'The resource you requested could not be found.', status_code: 404 });
+    else {
+        const id = parseInt(req.params.id);
+        const person = await peopleModel.findByPeopleDBId(id);
+        if (person) {
+            res.status(200).json(person);
+        } else {
+            res.status(404).json({ message: 'The resource you requested could not be found.', status_code: 404 });
+        }
     }
+
 }));
 
 router.get('/tmdb/popular/page:page', asyncHandler(async (req, res) => {
-    const page = parseInt(req.params.page);
-    const people = await getPeople(page);
-    res.status(200).json(people);
+    if (pageReg.test(req.params.page)) {
+        const page = parseInt(req.params.page);
+        const people = await getPeople(page);
+        res.status(200).json(people);
+    }
+    else {
+        res.status(404).json({ message: 'Invalid page form.', status_code: 404 })
+    }
 }));
 
 router.get('/tmdb/person/:id', asyncHandler(async (req, res) => {
-    const id = parseInt(req.params.id);
-    const person = await getPerson(id);
-    res.status(200).json(person);
+    if (!personIdReg.test(req.params.id)) {
+        res.status(403).json({ message: 'Invalid person id.', status_code: 403 });
+    }
+    else {
+        const id = parseInt(req.params.id);
+        const person = await getPerson(id);
+        res.status(200).json(person);
+    }
 }));
 
 router.get('/tmdb/person/:id/images', asyncHandler(async (req, res) => {
-    const id = parseInt(req.params.id);
-    const personImages = await getPersonImages(id);
-    res.status(200).json(personImages);
+    if (!personIdReg.test(req.params.id)) {
+        res.status(403).json({ message: 'Invalid person id.', status_code: 403 });
+    }
+    else {
+        const id = parseInt(req.params.id);
+        const personImages = await getPersonImages(id);
+        res.status(200).json(personImages);
+    }
 }));
 
 router.get('/tmdb/person/:id/movie_credits', asyncHandler(async (req, res) => {
-    const id = parseInt(req.params.id);
-    const personMovieCredits = await getPersonMovieCredits(id);
-    res.status(200).json(personMovieCredits);
+    if (!personIdReg.test(req.params.id)) {
+        res.status(403).json({ message: 'Invalid person id.', status_code: 403 });
+    }
+    else {
+        const id = parseInt(req.params.id);
+        const personMovieCredits = await getPersonMovieCredits(id);
+        res.status(200).json(personMovieCredits);
+    }
 }));
 
 router.get('/tmdb/person/:id/external_ids', asyncHandler(async (req, res) => {
-    const id = parseInt(req.params.id);
-    const personExternalIds = await getPersonExternalIds(id);
-    res.status(200).json(personExternalIds);
+    if (!personIdReg.test(req.params.id)) {
+        res.status(403).json({ message: 'Invalid person id.', status_code: 403 });
+    }
+    else {
+        const id = parseInt(req.params.id);
+        const personExternalIds = await getPersonExternalIds(id);
+        res.status(200).json(personExternalIds);
+    }
 }));
 
 export default router;
