@@ -56,11 +56,16 @@ router.post('/:id/reviews', (req, res) => {
         res.status(403).json({ message: 'Invalid movie id.', status_code: 403 });
     }
     else if (movieReviews.id == id) {
-        req.body.created_at = new Date();
-        req.body.updated_at = new Date();
-        req.body.id = uniqid();
-        movieReviews.results.push(req.body); //push the new review onto the list
-        res.status(201).json(req.body);
+        if (req.body.author && req.body.content) {
+            req.body.created_at = new Date();
+            req.body.updated_at = new Date();
+            req.body.id = uniqid();
+            movieReviews.results.push(req.body); //push the new review onto the list
+            res.status(201).json(req.body);
+        }
+        else {
+            res.status(403).json({ message: 'Invalid author name or content.', status_code: 403 });
+        }
     } else {
         res.status(404).json({
             message: 'The resource you requested could not be found.',

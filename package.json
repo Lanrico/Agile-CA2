@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm-run-all clean compile:all",
     "clean": "rimraf ./build && mkdir build",
-     "compile:tmdb": "babel ./api/ --out-dir build/api",
+    "compile:tmdb": "babel ./api/ --out-dir build/api",
     "compile:moviemodels": "babel ./api/movies --out-dir build/api/movies",
     "compile:usermodels": "babel ./api/users --out-dir build/api/users",
     "compile:genremodels": "babel ./api/genres --out-dir build/api/genres",
@@ -37,24 +37,25 @@
     "chai": "^4.0.2",
     "cross-env": "^6.0.3",
     "mocha": "^8.1.3",
-    "supertest": "^4.0.2",
+    "ncp": "2.0.0",
+    "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.0",
-    "ncp": "2.0.0",
-    "nodemon": "^2.0.15"
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
     "bcrypt-nodejs": "^0.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^8.5.1",
+    "loglevel": "^1.7.1",
     "mongoose": "^6.7.2",
     "node-fetch": "^2.6.7",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
-    "uniqid": "^5.4.0",
-    "express-async-handler": "^1.2.0"
+    "uniqid": "^5.4.0"
   }
 }
