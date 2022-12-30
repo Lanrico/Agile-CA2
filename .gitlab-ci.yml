@@ -46,8 +46,6 @@ test_api:
 merge_test:
   stage: test
   script: make test-coveralls
-  only:
-  - merge_requests
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
