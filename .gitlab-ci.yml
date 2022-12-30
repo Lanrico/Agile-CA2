@@ -63,5 +63,4 @@ deploy_prod:
   environment:
     name: production
     url: https://agile-ca2-cicd-jgl.herokuapp.com/
-  rules:
-    when: manual
+  when: manual
