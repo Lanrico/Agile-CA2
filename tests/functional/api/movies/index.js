@@ -39,17 +39,21 @@ describe("Movies endpoint", () => {
   });
 
   beforeEach(async () => {
-    beforeEach(() => {
-      // Clean out datastore
-      while (movieReviews.results.length > 0) {
-        movieReviews.results.pop()
-      }
-      // Repopulate datastore
-      seedData.movieReviews.forEach(review => movieReviews.results.push(review))
-    })
+    // Clean out datastore
+    while (movieReviews.results.length > 0) {
+      movieReviews.results.pop()
+    }
+    // Repopulate datastore
+    seedData.movieReviews.forEach(review => movieReviews.results.push(review))
     try {
       await Movie.deleteMany();
       await Movie.collection.insertMany(movies);
+      await User.deleteMany();
+      // Register a user
+      await request(api).post("/api/users?action=register").send({
+        username: "user1",
+        password: "test1",
+      });
     } catch (err) {
       console.error(`failed to Load user Data: ${err}`);
     }
@@ -315,18 +319,6 @@ describe("Movies endpoint", () => {
   });
 
   describe("GET /api/movies/tmdb/upcoming/page:page", () => {
-    beforeEach(async () => {
-      try {
-        await User.deleteMany();
-        // Register two users
-        await request(api).post("/api/users?action=register").send({
-          username: "user1",
-          password: "test1",
-        });
-      } catch (err) {
-        console.error(`failed to Load user test Data: ${err}`);
-      }
-    });
     describe("when the user is authenticated", () => {
       before(() => {
         token = "BEARER eyJhbGciOiJIUzI1NiJ9.dXNlcjE.FmYria8wq0aFDHnzYWhKQrhF5BkJbFNN1PqNyNQ7V4M"
@@ -376,18 +368,6 @@ describe("Movies endpoint", () => {
   });
 
   describe("GET /api/movies/movie/:id", () => {
-    beforeEach(async () => {
-      try {
-        await User.deleteMany();
-        // Register two users
-        await request(api).post("/api/users?action=register").send({
-          username: "user1",
-          password: "test1",
-        });
-      } catch (err) {
-        console.error(`failed to Load user test Data: ${err}`);
-      }
-    });
     describe("when the user is authenticated", () => {
       before(() => {
         token = "BEARER eyJhbGciOiJIUzI1NiJ9.dXNlcjE.FmYria8wq0aFDHnzYWhKQrhF5BkJbFNN1PqNyNQ7V4M"
@@ -430,18 +410,6 @@ describe("Movies endpoint", () => {
   });
 
   describe("GET /api/movies/movie/:id/images", () => {
-    beforeEach(async () => {
-      try {
-        await User.deleteMany();
-        // Register two users
-        await request(api).post("/api/users?action=register").send({
-          username: "user1",
-          password: "test1",
-        });
-      } catch (err) {
-        console.error(`failed to Load user test Data: ${err}`);
-      }
-    });
     describe("when the user is authenticated", () => {
       before(() => {
         token = "BEARER eyJhbGciOiJIUzI1NiJ9.dXNlcjE.FmYria8wq0aFDHnzYWhKQrhF5BkJbFNN1PqNyNQ7V4M"
@@ -485,18 +453,6 @@ describe("Movies endpoint", () => {
   });
 
   describe("GET /api/movies/movie/:id/reviews", () => {
-    beforeEach(async () => {
-      try {
-        await User.deleteMany();
-        // Register two users
-        await request(api).post("/api/users?action=register").send({
-          username: "user1",
-          password: "test1",
-        });
-      } catch (err) {
-        console.error(`failed to Load user test Data: ${err}`);
-      }
-    });
     describe("when the user is authenticated", () => {
       before(() => {
         token = "BEARER eyJhbGciOiJIUzI1NiJ9.dXNlcjE.FmYria8wq0aFDHnzYWhKQrhF5BkJbFNN1PqNyNQ7V4M"
