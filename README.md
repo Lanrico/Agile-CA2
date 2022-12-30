@@ -210,14 +210,7 @@ database connected to test on ac-adm76o4-shard-00-02.gy7xr1q.mongodb.net
 ~~~
 ​
 ## Independent Learning (if relevant)
-​
-State the options from the Excellent grade band you attempted. 
-​
-For Option A, specify the URL of the GitHub repository hosting the source code for the single-endpoint project and the URL of the Vercel deployment. If the deployment failed, explain the problem(s) you encountered.
-​
-For Option B, specify the URL of the Coveralls webpage that contains your tests' code coverage metrics.
-​
-State any other independent learning you achieved while completing this assignment.
+
 Option B:
-https://coveralls.io/gitlab/Lanrico/agile-ca2-cicd?branch=main
-[![Coverage Status](https://coveralls.io/repos/gitlab/Lanrico/agile-ca2-cicd/badge.svg?branch=main)](https://coveralls.io/gitlab/Lanrico/agile-ca2-cicd?branch=main)
++ https://coveralls.io/gitlab/Lanrico/agile-ca2-cicd?branch=main
++ [![Coverage Status](https://coveralls.io/repos/gitlab/Lanrico/agile-ca2-cicd/badge.svg?branch=main)](https://coveralls.io/gitlab/Lanrico/agile-ca2-cicd?branch=main)
