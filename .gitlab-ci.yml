@@ -36,7 +36,7 @@ install_dependencies:
 Build_api:
   stage: build
   before_script:
-     - npm run clean
+    - npm run clean
   script:
     - npm run build
 
@@ -48,6 +48,7 @@ test_api:
 code_coverage:
   stage: test
   script:
+    - npm install -g grunt-cli
     - grunt coveralls
 
 deploy_staging:
