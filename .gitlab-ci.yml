@@ -43,10 +43,11 @@ test_api:
   script:
     - npm test
 
-merge_test:
+code_coverage:
   stage: test
-  script: make test-coveralls
-  
+  script:
+    - grunt coveralls
+
 deploy_staging:
   image: ruby:latest
   stage: staging
