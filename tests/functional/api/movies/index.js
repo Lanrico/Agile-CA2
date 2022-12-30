@@ -368,7 +368,7 @@ describe("Movies endpoint", () => {
     });
   });
 
-  describe("GET /api/movies/movie/:id", () => {
+  describe("GET /api/movies/tmdb/movie/:id", () => {
     describe("when the user is authenticated", () => {
       before(() => {
         token = "BEARER eyJhbGciOiJIUzI1NiJ9.dXNlcjE.FmYria8wq0aFDHnzYWhKQrhF5BkJbFNN1PqNyNQ7V4M"
@@ -411,7 +411,7 @@ describe("Movies endpoint", () => {
     });
   });
 
-  describe("GET /api/movies/movie/:id/images", () => {
+  describe("GET /api/movies/tmdb/movie/:id/images", () => {
     describe("when the user is authenticated", () => {
       before(() => {
         token = "BEARER eyJhbGciOiJIUzI1NiJ9.dXNlcjE.FmYria8wq0aFDHnzYWhKQrhF5BkJbFNN1PqNyNQ7V4M"
@@ -455,7 +455,7 @@ describe("Movies endpoint", () => {
     });
   });
 
-  describe("GET /api/movies/movie/:id/reviews", () => {
+  describe("GET /api/movies/tmdb/movie/:id/reviews", () => {
     describe("when the user is authenticated", () => {
       before(() => {
         token = "BEARER eyJhbGciOiJIUzI1NiJ9.dXNlcjE.FmYria8wq0aFDHnzYWhKQrhF5BkJbFNN1PqNyNQ7V4M"

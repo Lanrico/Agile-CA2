@@ -30,7 +30,8 @@ install_dependencies:
   stage: install
   script:
     - npm  ci
-
+    - npm install grunt --save-dev
+    - npm install grunt-coveralls --save-dev
 Build_api:
   stage: build
   before_script:
