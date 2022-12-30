@@ -52,15 +52,14 @@ describe("Genres endpoint", () => {
     });
   });
   describe("GET /api/genres/tmdb", () => {
-    it("should return a list of genres and a status 200", (done) => {
+    it("should return a list of genres and a status 200", () => {
       request(api)
-        .get("/api/genres")
+        .get("/api/genres/tmdb")
         .set("Accept", "application/json")
         .expect("Content-Type", /json/)
         .expect(200)
-        .end((err, res) => {
+        .then((res) => {
           expect(res.body).to.be.a("array");
-          done();
         });
     });
   });
