@@ -125,14 +125,14 @@ describe("Users endpoint", () => {
     describe("for valid user name", () => {
       describe("when the movie is not in favourites", () => {
         it("should return user message and a status 201", () => {
-          request(api)
+          return request(api)
             .post(`/api/users/${users[0].username}/favourites`)
             .send({
               id: 77660
             })
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
-            .expect(200)
+            .expect(201)
             .then((res) => {
               expect(res.body).to.have.property("username", users[0].username);
               expect(res.body.favourites.length).to.equal(2);
@@ -141,7 +141,7 @@ describe("Users endpoint", () => {
       });
       describe("when the movie is in favourites", () => {
         it("return error message and a status 404", () => {
-          request(api)
+          return request(api)
             .post(`/api/users/${users[0].username}/favourites`)
             .send({
               id: 411
@@ -151,16 +151,6 @@ describe("Users endpoint", () => {
             .expect(404)
             .expect({ code: 404, msg: 'Already in favourites' })
         });
-      });
-    });
-    describe("for invalid user name", () => {
-      it("return error message and a status 403", () => {
-        request(api)
-          .get(`/api/users/;'--=&*/favourites`)
-          .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
-          .expect(403)
-          .expect({ code: 403, msg: 'Already in favourites' })
       });
     });
   });
@@ -180,14 +170,14 @@ describe("Users endpoint", () => {
     describe("for valid user name", () => {
       describe("when the movie is in favourites", () => {
         it("should return user message and a status 201", () => {
-          request(api)
+          return request(api)
             .post(`/api/users/${users[0].username}/favourites/remove`)
             .send({
               id: 411
             })
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
-            .expect(200)
+            .expect(201)
             .then((res) => {
               expect(res.body).to.have.property("username", users[0].username);
               expect(res.body.favourites.length).to.equal(0);
@@ -196,7 +186,7 @@ describe("Users endpoint", () => {
       });
       describe("when the movie is not in favourites", () => {
         it("return error message and a status 404", () => {
-          request(api)
+          return request(api)
             .post(`/api/users/${users[0].username}/favourites/remove`)
             .send({
               id: 76600
@@ -208,22 +198,12 @@ describe("Users endpoint", () => {
         });
       });
     });
-    describe("for invalid user name", () => {
-      it("return error message and a status 403", () => {
-        request(api)
-          .get(`/api/users/;'--=&*/favourites/remove`)
-          .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
-          .expect(403)
-          .expect({ code: 403, msg: 'Invalid movie id or user name' })
-      });
-    });
   });
 
   describe("GET /api/users/:userName/recommendation", () => {
     describe("when the user have favourites", () => {
       it("should return a list of recommand movies and a status 200", () => {
-        request(api)
+        return request(api)
           .get(`/api/users/${users[0].username}/recommendation`)
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)
@@ -236,7 +216,7 @@ describe("Users endpoint", () => {
     });
     describe("when the user do not have any favourites", () => {
       it("return an empty array and a status 201", () => {
-        request(api)
+        return request(api)
           .get(`/api/users/${users[1].username}/recommendation`)
           .set("Accept", "application/json")
           .expect("Content-Type", /json/)

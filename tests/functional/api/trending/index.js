@@ -30,7 +30,7 @@ describe("Trending endpoint", () => {
     describe("for valid type and valid time window", () => {
       describe("when type is movie and time window is day", () => {
         it("should a list of 20 trending movies and a status 200", () => {
-          request(api)
+          return request(api)
             .get("/api/trending/tmdb/movie/day")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
@@ -44,7 +44,7 @@ describe("Trending endpoint", () => {
       });
       describe("when type is movie and time window is week", () => {
         it("should a list of 20 trending movies and a status 200", () => {
-          request(api)
+          return request(api)
             .get("/api/trending/tmdb/movie/week")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
@@ -58,7 +58,7 @@ describe("Trending endpoint", () => {
       });
       describe("when type is person and time window is day", () => {
         it("should a list of 20 trending people and a status 200", () => {
-          request(api)
+          return request(api)
             .get("/api/trending/tmdb/person/day")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
@@ -72,7 +72,7 @@ describe("Trending endpoint", () => {
       });
       describe("when type is person and time window is week", () => {
         it("should a list of 20 trending people and a status 200", () => {
-          request(api)
+          return request(api)
             .get("/api/trending/tmdb/person/day")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)

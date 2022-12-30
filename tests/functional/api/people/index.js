@@ -99,7 +99,7 @@ describe("People endpoint", () => {
       });
       describe("for invalid id", () => {
         it("should return the NOT found message", () => {
-          request(api)
+          return request(api)
             .get(`/api/people/123123`)
             .set("Authorization", token)
             .expect("Content-Type", /json/)
