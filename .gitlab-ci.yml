@@ -22,7 +22,7 @@ stages:
   - build
   - test
   - staging
-  - deploy
+  - production
 
 # Jobs:
 
@@ -45,8 +45,6 @@ test_api:
 
 deploy_staging:
   image: ruby:latest
-  only:
-    - develop
   stage: staging
   before_script:
     - apt-get update -qy
@@ -56,11 +54,35 @@ deploy_staging:
     - dpl --provider=heroku --app=$HEROKU_APP_NAME_STAGING --api-key=$HEROKU_API_KEY
     - echo "Deployed to staging server"
 
-deploy_prod:
-  stage: deploy
+deploy_prod_manual:
+  image: ruby:latest
+  only:
+    - develop
+  stage: production
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl  
   script:
-    - echo "Deploy to production server"
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME_PRODUCTION --api-key=$HEROKU_API_KEY
+    - echo "Deploy to production server manually"
   environment:
     name: production
-    url: https://agile-ca2-cicd-jgl.herokuapp.com/
+    url: https://agile-ca2-cicd-jgl-production.herokuapp.com/
   when: manual
+
+deploy_prod_auto:
+  image: ruby:latest
+  only:
+    - main
+  stage: production
+  before_script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl  
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME_PRODUCTION --api-key=$HEROKU_API_KEY
+    - echo "Deploy to production server automatically"
+  environment:
+    name: production
+    url: https://agile-ca2-cicd-jgl-production.herokuapp.com/
