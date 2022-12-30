@@ -12,7 +12,7 @@ router.get('/tmdb/:type/:time_window', asyncHandler(async (req, res) => {
         res.status(200).json(trendingList);
     }
     else {
-        res.status(404).json({ message: 'Invalid trending type or time_window.', status_code: 403 });
+        res.status(404).json({ message: 'Invalid trending type or time_window.', status_code: 404 });
     }
 }));
 

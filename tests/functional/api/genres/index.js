@@ -37,7 +37,7 @@ describe("Genres endpoint", () => {
   afterEach(() => {
     api.close(); // Release PORT 8080
   });
-  describe("GET /api/genres ", () => {
+  describe("GET /api/genres", () => {
     it("should return 4 genres and a status 200", (done) => {
       request(api)
         .get("/api/genres")
@@ -51,7 +51,7 @@ describe("Genres endpoint", () => {
         });
     });
   });
-  describe("GET /api/genres/tmdb ", () => {
+  describe("GET /api/genres/tmdb", () => {
     it("should return a list of genres and a status 200", (done) => {
       request(api)
         .get("/api/genres")
