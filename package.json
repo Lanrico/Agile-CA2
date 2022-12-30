@@ -22,8 +22,7 @@
     "postinstall": "rimraf ./build && npm run compile:all",
     "start": "nodemon --exec babel-node index.js",
     "start:prod": "cross-env SEED_DB=true NODE_ENV=test node build/index.js",
-    "test": "nyc --reporter=lcov --reporter=text-lcov cross-env NODE_ENV=test SEED_DB=false mocha",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "test": "nyc cross-env NODE_ENV=test SEED_DB=false mocha"
   },
   "author": "Guanlan Ji",
   "license": "ISC",

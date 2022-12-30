@@ -61,52 +61,6 @@ describe("Movies endpoint", () => {
   afterEach(() => {
     api.close(); // Release PORT 8080
   });
-  describe("GET /api/movies ", () => {
-    it("should return 20 movies and a status 200", (done) => {
-      request(api)
-        .get("/api/movies")
-        .set("Accept", "application/json")
-        .expect("Content-Type", /json/)
-        .expect(200)
-        .end((err, res) => {
-          expect(res.body).to.be.a("array");
-          expect(res.body.length).to.equal(20);
-          done();
-        });
-    });
-  });
-
-  describe("GET /api/movies/:id", () => {
-    describe("when the id is valid", () => {
-      it("should return the matching movie", () => {
-        return request(api)
-          .get(`/api/movies/${movies[0].id}`)
-          .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
-          .expect(200)
-          .then((res) => {
-            expect(res.body).to.have.property("title", movies[0].title);
-          });
-      });
-    });
-    describe("when the id is invalid", () => {
-      it("should return the NOT found message", () => {
-        return request(api)
-          .get("/api/movies/9999")
-          .set("Accept", "application/json")
-          .expect("Content-Type", /json/)
-          .expect(404)
-          .expect({
-            status_code: 404,
-            message: "The resource you requested could not be found.",
-          });
-      });
-    });
-  });
-  //
-  //
-  //
-  //
   describe("GET /api/movies/:id/reviews", () => {
     describe("when the id is valid", () => {
       it("should a object contains a list of the reviews of the movie and a status 200", () => {
