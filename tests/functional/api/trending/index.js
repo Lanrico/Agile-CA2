@@ -29,62 +29,58 @@ describe("Trending endpoint", () => {
   describe("GET /api/trending/tmdb/:type/:time_window", () => {
     describe("for valid type and valid time window", () => {
       describe("when type is movie and time window is day", () => {
-        it("should a list of 20 trending movies and a status 200", (done) => {
+        it("should a list of 20 trending movies and a status 200", () => {
           request(api)
             .get("/api/trending/tmdb/movie/day")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
             .expect(200)
-            .end((err, res) => {
+            .then((res) => {
               expect(res.body.results[0]).to.have.property("overview");
               expect(res.body.results).to.be.a("array");
               expect(res.body.results.length).to.equal(20);
-              done();
             });
         });
       });
       describe("when type is movie and time window is week", () => {
-        it("should a list of 20 trending movies and a status 200", (done) => {
+        it("should a list of 20 trending movies and a status 200", () => {
           request(api)
             .get("/api/trending/tmdb/movie/week")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
             .expect(200)
-            .end((err, res) => {
+            .then((res) => {
               expect(res.body.results[0]).to.have.property("overview");
               expect(res.body.results).to.be.a("array");
               expect(res.body.results.length).to.equal(20);
-              done();
             });
         });
       });
       describe("when type is person and time window is day", () => {
-        it("should a list of 20 trending people and a status 200", (done) => {
+        it("should a list of 20 trending people and a status 200", () => {
           request(api)
             .get("/api/trending/tmdb/person/day")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
             .expect(200)
-            .end((err, res) => {
+            .then((res) => {
               expect(res.body.results[0]).to.have.property("gender");
               expect(res.body.results).to.be.a("array");
               expect(res.body.results.length).to.equal(20);
-              done();
             });
         });
       });
       describe("when type is person and time window is week", () => {
-        it("should a list of 20 trending people and a status 200", (done) => {
+        it("should a list of 20 trending people and a status 200", () => {
           request(api)
             .get("/api/trending/tmdb/person/day")
             .set("Accept", "application/json")
             .expect("Content-Type", /json/)
             .expect(200)
-            .end((err, res) => {
+            .then((res) => {
               expect(res.body.results[0]).to.have.property("gender");
               expect(res.body.results).to.be.a("array");
               expect(res.body.results.length).to.equal(20);
-              done();
             });
         });
       });

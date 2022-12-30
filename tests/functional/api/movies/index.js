@@ -358,11 +358,12 @@ describe("Movies endpoint", () => {
       before(() => {
         token = "123", page = 1
       })
-      it("should return a status 401", () => {
+      it("should return a status 401 and Unauthorized message", () => {
         return request(api)
           .get(`/api/movies/tmdb/upcoming/page${page}`)
           .set("Authorization", token)
           .expect(401)
+          .expect("Unauthorized");
       });
     });
   });
@@ -400,11 +401,12 @@ describe("Movies endpoint", () => {
       before(() => {
         token = "123"
       })
-      it("should return a status 401", () => {
+      it("should return a status 401 and Unauthorized message", () => {
         return request(api)
           .get(`/api/movies/tmdb/movie/${movies[0].id}`)
           .set("Authorization", token)
           .expect(401)
+          .expect("Unauthorized");
       });
     });
   });
@@ -443,11 +445,12 @@ describe("Movies endpoint", () => {
       before(() => {
         token = "123"
       })
-      it("should return a status 401", () => {
+      it("should return a status 401 and Unauthorized message", () => {
         return request(api)
           .get(`/api/movies/tmdb/movie/${movies[0].id}/images`)
           .set("Authorization", token)
           .expect(401)
+          .expect("Unauthorized");
       });
     });
   });
@@ -485,11 +488,12 @@ describe("Movies endpoint", () => {
       before(() => {
         token = "123"
       })
-      it("should return a status 401", () => {
+      it("should return a status 401 and Unauthorized message", () => {
         return request(api)
           .get(`/api/movies/tmdb/movie/${movies[0].id}/reviews`)
           .set("Authorization", token)
           .expect(401)
+          .expect("Unauthorized");
       });
     });
   });
