@@ -43,6 +43,15 @@ test_api:
   script:
     - npm test
 
+merge_test:
+  stage: test
+  script: make test-coveralls
+  only:
+  - merge_requests
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+
+
 deploy_staging:
   image: ruby:latest
   stage: staging
