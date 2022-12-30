@@ -1,8 +1,8 @@
 file:
-    # - 'tests/functional/api/users/index.js'
-    # - 'tests/functional/api/movies/index.js'
-    # - 'tests/functional/api/genres/index.js'
-    # - 'tests/functional/api/trending/index.js'
+    - 'tests/functional/api/users/index.js'
+    - 'tests/functional/api/movies/index.js'
+    - 'tests/functional/api/genres/index.js'
+    - 'tests/functional/api/trending/index.js'
     - 'tests/functional/api/people/index.js'
 require: '@babel/register'
 exit: true
