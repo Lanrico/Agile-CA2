@@ -42,13 +42,10 @@ Build_api:
 
 test_api:
   stage: test
+  before_script:
+    - npm install -g grunt-cli
   script:
     - npm test
-
-code_coverage:
-  stage: test
-  script:
-    - npm install -g grunt-cli
     - grunt coveralls
 
 deploy_staging:
