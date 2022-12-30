@@ -32,6 +32,7 @@ install_dependencies:
     - npm  ci
     - npm install grunt --save-dev
     - npm install grunt-coveralls --save-dev
+    - npm install -g grunt-cli
 Build_api:
   stage: build
   before_script:
