@@ -214,3 +214,10 @@ database connected to test on ac-adm76o4-shard-00-02.gy7xr1q.mongodb.net
 Option B:
 + https://coveralls.io/gitlab/Lanrico/agile-ca2-cicd?branch=main
 + [![Coverage Status](https://coveralls.io/repos/gitlab/Lanrico/agile-ca2-cicd/badge.svg?branch=main)](https://coveralls.io/gitlab/Lanrico/agile-ca2-cicd?branch=main)
+
+## Other related links
+gitlab: https://gitlab.com/Lanrico/agile-ca2-cicd
+github: https://github.com/Lanrico/Agile-CA2
+HEROKU Staging: https://dashboard.heroku.com/apps/agile-ca2-cicd-jgl
+HEROKU Production: https://dashboard.heroku.com/apps/agile-ca2-cicd-jgl-production
+Coverall: https://coveralls.io/gitlab/Lanrico/agile-ca2-cicd
