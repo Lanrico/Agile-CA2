@@ -44,7 +44,9 @@ test_api:
     - npm install -g grunt-cli
   script:
     - npm test
+    - echo "Tested and generate Code Coverage reports"
     - grunt coveralls
+    - echo "Publish the Code Coverage reports on the Coveralls web service"
 
 deploy_staging:
   image: ruby:latest
